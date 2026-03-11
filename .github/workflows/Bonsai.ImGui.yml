@@ -20,6 +20,10 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      publish-documentation:
+        description: "Publish documentation to GitHub Pages?"
+        default: "false"
 env:
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
@@ -128,6 +132,11 @@ jobs:
 
       - name: Set up .NET tools
         run: dotnet tool restore
+
+      # ----------------------------------------------------------------------- Configure build
+      - name: Configure build
+        id: configure-build
+        uses: bonsai-rx/configure-build@v1
 
       # ----------------------------------------------------------------------- Restore
       - name: Restore
@@ -314,6 +323,7 @@ jobs:
     if: |
       !cancelled() && !failure() && needs.build-documentation.result == 'success'
       && (github.event_name == 'release'
+        || (github.event_name == 'workflow_dispatch' && github.event.inputs.publish-documentation == 'true')
         || (vars.CONTINUOUS_DOCUMENTATION && github.event_name != 'pull_request')
       )
     steps:
@@ -340,5 +350,4 @@ jobs:
       # ----------------------------------------------------------------------- Publish to GitHub Pages
       - name: Publish to GitHub Pages
         id: publish
-        if: github.event_name == 'release' || github.event.repository.fork
         uses: actions/deploy-pages@v4
