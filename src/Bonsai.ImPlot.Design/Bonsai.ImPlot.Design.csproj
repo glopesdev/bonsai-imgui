@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Title>Bonsai - ImPlotDesign </Title>
-    <Description>Bonsai Library containing backend infrastructure for composing real-time plots and interactive visualizations using Dear ImGui.</Description>
+    <Title>Bonsai - ImPlot Design</Title>
+    <Description>Bonsai Library containing backend infrastructure for composing real-time plots using Dear ImGui.</Description>
     <PackageTags>$(PackageTags) ImPlot Design</PackageTags>
     <TargetFrameworks>net472</TargetFrameworks>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
